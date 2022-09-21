@@ -1,18 +1,21 @@
+local cond = require('lvim.utils.conditions')
+
 local core_plugins = {
   -- Packer can manage itself as an optional plugin
   { "wbthomason/packer.nvim" },
-  { "neovim/nvim-lspconfig" },
-  { "tamago324/nlsp-settings.nvim" },
+  { "neovim/nvim-lspconfig", cond = cond.term },
+  { "tamago324/nlsp-settings.nvim", cond = cond.term },
   {
-    "jose-elias-alvarez/null-ls.nvim",
+    "jose-elias-alvarez/null-ls.nvim", cond = cond.term
   },
   { "antoinemadec/FixCursorHold.nvim" }, -- Needed while issue https://github.com/neovim/neovim/issues/12587 is still open
-  { "williamboman/mason-lspconfig.nvim" },
+  { "williamboman/mason-lspconfig.nvim", cond = cond.term },
   {
     "williamboman/mason.nvim",
     config = function()
       require("lvim.core.mason").setup()
     end,
+    cond = cond.term
   },
   {
     "lunarvim/onedarker.nvim",
@@ -26,6 +29,7 @@ local core_plugins = {
       end)
     end,
     disable = lvim.colorscheme ~= "onedarker",
+    cond = cond.term
   },
   {
     "rcarriga/nvim-notify",
@@ -34,11 +38,12 @@ local core_plugins = {
     end,
     requires = { "nvim-telescope/telescope.nvim" },
     disable = not lvim.builtin.notify.active or not lvim.builtin.telescope.active,
+    cond = cond.term
   },
-  { "Tastyep/structlog.nvim" },
+  { "Tastyep/structlog.nvim", cond = cond.term },
 
-  { "nvim-lua/popup.nvim" },
-  { "nvim-lua/plenary.nvim" },
+  { "nvim-lua/popup.nvim", cond = cond.term },
+  { "nvim-lua/plenary.nvim", cond = cond.term },
   -- Telescope
   {
     "nvim-telescope/telescope.nvim",
@@ -47,12 +52,14 @@ local core_plugins = {
       require("lvim.core.telescope").setup()
     end,
     disable = not lvim.builtin.telescope.active,
+    cond = cond.term
   },
   {
     "nvim-telescope/telescope-fzf-native.nvim",
     requires = { "nvim-telescope/telescope.nvim" },
     run = "make",
     disable = not lvim.builtin.telescope.active,
+    cond = cond.term
   },
   -- Install nvim-cmp, and buffer source as a dependency
   {
@@ -65,10 +72,12 @@ local core_plugins = {
     requires = {
       "L3MON4D3/LuaSnip",
     },
+    cond = cond.term
   },
   {
     "rafamadriz/friendly-snippets",
     disable = not lvim.builtin.luasnip.sources.friendly_snippets,
+    cond = cond.term
   },
   {
     "L3MON4D3/LuaSnip",
@@ -88,22 +97,28 @@ local core_plugins = {
       }
       require("luasnip.loaders.from_snipmate").lazy_load()
     end,
+    cond = cond.term
   },
   {
     "hrsh7th/cmp-nvim-lsp",
+    cond = cond.term
   },
   {
     "saadparwaiz1/cmp_luasnip",
+    cond = cond.term
   },
   {
     "hrsh7th/cmp-buffer",
+    cond = cond.term
   },
   {
     "hrsh7th/cmp-path",
+    cond = cond.term
   },
   {
     "folke/lua-dev.nvim",
     module = "lua-dev",
+    cond = cond.term
   },
 
   -- Autopairs
@@ -114,6 +129,7 @@ local core_plugins = {
       require("lvim.core.autopairs").setup()
     end,
     disable = not lvim.builtin.autopairs.active,
+    cond = cond.term
   },
 
   -- Treesitter
@@ -123,10 +139,12 @@ local core_plugins = {
     config = function()
       require("lvim.core.treesitter").setup()
     end,
+    cond = cond.term
   },
   {
     "JoosepAlviste/nvim-ts-context-commentstring",
     event = "BufReadPost",
+    cond = cond.term
   },
 
   -- NvimTree
@@ -138,6 +156,7 @@ local core_plugins = {
       require("lvim.core.nvimtree").setup()
     end,
     disable = not lvim.builtin.nvimtree.active,
+    cond = cond.term
   },
 
   {
@@ -148,6 +167,7 @@ local core_plugins = {
     end,
     event = "BufRead",
     disable = not lvim.builtin.gitsigns.active,
+    cond = cond.term
   },
 
   -- Whichkey
@@ -158,6 +178,7 @@ local core_plugins = {
     end,
     event = "BufWinEnter",
     disable = not lvim.builtin.which_key.active,
+    cond = cond.term
   },
 
   -- Comments
@@ -177,12 +198,14 @@ local core_plugins = {
       require("lvim.core.project").setup()
     end,
     disable = not lvim.builtin.project.active,
+    cond = cond.term
   },
 
   -- Icons
   {
     "kyazdani42/nvim-web-devicons",
     disable = not lvim.use_icons,
+    cond = cond.term
   },
 
   -- Status Line and Bufferline
@@ -194,6 +217,7 @@ local core_plugins = {
       require("lvim.core.lualine").setup()
     end,
     disable = not lvim.builtin.lualine.active,
+    cond = cond.term
   },
 
   {
@@ -204,6 +228,7 @@ local core_plugins = {
     branch = "main",
     event = "BufWinEnter",
     disable = not lvim.builtin.bufferline.active,
+    cond = cond.term
   },
 
   -- Debugging
@@ -214,6 +239,7 @@ local core_plugins = {
       require("lvim.core.dap").setup()
     end,
     disable = not lvim.builtin.dap.active,
+    cond = cond.term
   },
 
   -- Debugger management
@@ -223,6 +249,7 @@ local core_plugins = {
     -- event = "BufWinEnter",
     -- event = "BufRead",
     disable = not lvim.builtin.dap.active,
+    cond = cond.term
   },
 
   -- alpha
@@ -232,6 +259,7 @@ local core_plugins = {
       require("lvim.core.alpha").setup()
     end,
     disable = not lvim.builtin.alpha.active,
+    cond = cond.term
   },
 
   -- Terminal
@@ -243,11 +271,13 @@ local core_plugins = {
       require("lvim.core.terminal").setup()
     end,
     disable = not lvim.builtin.terminal.active,
+    cond = cond.term
   },
 
   -- SchemaStore
   {
     "b0o/schemastore.nvim",
+    cond = cond.term
   },
 }
 

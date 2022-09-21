@@ -439,7 +439,14 @@ function setup_lvim() {
 
   setup_shim
 
-  cp "$LUNARVIM_BASE_DIR/utils/installer/config.example.lua" "$LUNARVIM_CONFIG_DIR/config.lua"
+
+  # copy old config if exists
+  if [ -d "$LUNARVIM_CONFIG_DIR.old" ]; then
+    echo "Found old config - copying to the new config directory"
+    cp "$LUNARVIM_CONFIG_DIR.old/config.lua" "$LUNARVIM_CONFIG_DIR/config.lua"
+  else
+    cp "$LUNARVIM_BASE_DIR/utils/installer/config.example.lua" "$LUNARVIM_CONFIG_DIR/config.lua"
+  fi
 
   echo "Preparing Packer setup"
 
